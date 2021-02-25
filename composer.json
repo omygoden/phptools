@@ -15,10 +15,10 @@
             "email": "705188245@qq.com"
         }
     ],
-    "autoload":[
+    "autoload":{
         "psr-4":{
             "Jieyu\\":"src/"
         }
-    ],
+    },
     "minimum-stability": "dev"
 }
