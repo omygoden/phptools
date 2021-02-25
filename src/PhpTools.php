@@ -1,4 +1,5 @@
 <?php
+namespace Jieyu;
 class PhpTools{
     //rsa加密
     public function rsaEncrype($data,$public_key){
