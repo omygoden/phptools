@@ -1,7 +1,7 @@
 <?php
 namespace Jieyu;
 class PhpTools{
-    //rsa加密
+    //rsa分段加密
     public function rsaEncrype($data,$public_key){
         $crypto = '';
         foreach (str_split($data, 117) as $chunk) {
@@ -11,6 +11,17 @@ class PhpTools{
         $encrypted = $this->urlsafe_b64encode($crypto);
 
         return $encrypted;
+    }
+
+    //rsa分段解密
+    public function rsaDecrype($encData,$private_key){
+        $crypto = '';
+        foreach (str_split($this->urlsafe_b64decode($encData), 128) as $chunk) {
+            openssl_private_decrypt($chunk, $decryptData, $private_key);
+            $crypto .= $decryptData;
+        }
+
+        return $crypto;
     }
 
     /**
@@ -40,17 +51,6 @@ class PhpTools{
         return base64_decode($data);
     }
 
-    //rsa解密
-    public function rsaDecrype($encData,$private_key){
-        $crypto = '';
-        foreach (str_split($this->urlsafe_b64decode($data), 128) as $chunk) {
-            openssl_private_decrypt($chunk, $decryptData, $private_key);
-            $crypto .= $decryptData;
-        }
-
-        return $crypto;
-    }
-
     //格式化公钥
     public function formatPublicKey($public_key){
         $fKey = "-----BEGIN PUBLIC KEY-----\n";
@@ -75,4 +75,3 @@ class PhpTools{
         return $fKey;
     }
 }
->
